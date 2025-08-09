@@ -19,8 +19,8 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="page-section active">
+      <form className="auth-form active" onSubmit={handleSubmit}>
         <h2>Signup</h2>
         <div>
           <label htmlFor="username">Username:</label>
@@ -63,8 +63,9 @@ const Signup = () => {
           />
         </div>
         <button type="submit">Signup</button>
+      <Link style={{textAlign:"center"}} to="/login">Already have an account? Login</Link>
+
       </form>
-      <Link to="/login">Already have an account? Login</Link>
     </div>
   );
 };

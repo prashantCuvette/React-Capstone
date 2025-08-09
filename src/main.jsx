@@ -5,9 +5,11 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import './styles.css';
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
+    
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
