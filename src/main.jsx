@@ -5,16 +5,18 @@ import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
+    <Toaster position="top-right" reverseOrder={false} />
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/" element={<ProtectedRoute />}>
-          <Route index element={<App />} />
+        <Route element={<ProtectedRoute />}>
+          <Route index path="/" element={<App />} />
         </Route>
       </Routes>
     </Router>
