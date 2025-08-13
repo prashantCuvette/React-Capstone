@@ -1,8 +1,11 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "./contexts/AuthContext";
+<<<<<<< ours
 import Header from "./components/Header";
 import AddTask from "./components/AddTask";
 import TaskCard from "./components/TaskCard";
+=======
+>>>>>>> theirs
 
 const App = () => {
   const auth = useContext(AuthContext);
