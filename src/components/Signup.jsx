@@ -1,7 +1,9 @@
 import { Link } from "react-router";
-import { useState } from "react";
-
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../contexts/AuthContext";
+import toast from "react-hot-toast";
+
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -10,12 +12,32 @@ const Signup = () => {
     password: "",
   });
 
+  const auth = useContext(AuthContext);
+  // console.log(auth);
+
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    navigate("/login");
+    try {
+      const result = await auth.signup(formData);
+      console.log(result)
+      if (!result.success) {
+        toast.error(result.error)
+        navigate("/signup");
+      } else {
+        navigate("/login");
+        toast.success("User Created Successfully");
+      }
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      toast.error(auth.error); // for user
+      console.log(error.message); // for dev
+    }
   };
 
   return (

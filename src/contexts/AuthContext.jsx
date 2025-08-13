@@ -2,46 +2,30 @@ import { createContext, useEffect, useState, useContext } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-// create a context
 export const AuthContext = createContext();
 
-// create a provider
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // ✅ start true
+  const [error, setError] = useState(null);
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null); // msg
-
+  // Restore user from localStorage on first load
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
-        console.log("Error parsing stored user data", error);
-        localStorage.removeItem("user"); // Remove corrupted data
+        console.error("Error parsing stored user data", error);
+        localStorage.removeItem("user");
       }
     }
+    setLoading(false); // ✅ mark done after reading
   }, []);
 
-  // Helper function to generate unique user ID
-  const generateUserId = async () => {
-    try {
-      const res = await fetch(`${API_URL}/users`);
-      const users = await res.json();
-      return users.length > 0
-        ? Math.max(...users.map((u) => u.userId || u.id)) + 1
-        : 1;
-    } catch (error) {
-      return Date.now(); // Fallback to timestamp
-    }
-  };
-
-  // login
   const login = async (email, password) => {
     setLoading(true);
     setError(null);
-
     try {
       const res = await fetch(
         `${API_URL}/users?email=${email}&password=${password}`
@@ -60,20 +44,17 @@ export const AuthProvider = ({ children }) => {
         return { success: false, error: "Invalid email or password" };
       }
     } catch (error) {
-      console.log("Login failed", error);
+      console.error("Login failed", error);
       setError("Login failed. Please try again.");
       setLoading(false);
       return { success: false, error: "Login failed. Please try again." };
     }
   };
 
-  // signup
   const signup = async (userdata) => {
     setLoading(true);
     setError(null);
-
     try {
-      // Check if user already exists
       const existingUserRes = await fetch(
         `${API_URL}/users?email=${userdata.email}`
       );
@@ -85,15 +66,12 @@ export const AuthProvider = ({ children }) => {
         return { success: false, error: "User with this email already exists" };
       }
 
-      // Generate unique user ID
       const userId = await generateUserId();
-      const newUser = { ...userdata, userId }; //name, email, pass, userId
+      const newUser = { ...userdata, userId };
 
       const res = await fetch(`${API_URL}/users`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newUser),
       });
 
@@ -107,41 +85,33 @@ export const AuthProvider = ({ children }) => {
         throw new Error("Signup failed");
       }
     } catch (error) {
-      console.log("Signup failed", error);
+      console.error("Signup failed", error);
       setError("Signup failed. Please try again.");
       setLoading(false);
       return { success: false, error: "Signup failed. Please try again." };
     }
   };
 
-  // logout
   const logout = () => {
     setUser(null);
     setError(null);
     localStorage.removeItem("user");
   };
 
-  // Check if user is authenticated
-  const isAuthenticated = () => {
-    return user !== null;
-  };
+  const isAuthenticated = () => user !== null;
 
-  // Update user data
   const updateUser = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
-  // Clear error
-  const clearError = () => {
-    setError(null);
-  };
+  const clearError = () => setError(null);
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        loading,
+        loading, // ✅ now exposed
         error,
         login,
         signup,
@@ -156,11 +126,10 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// create a customHook
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
+// export const useAuth = () => {
+//   const context = useContext(AuthContext);
+//   if (context === undefined) {
+//     throw new Error("useAuth must be used within an AuthProvider");
+//   }
+//   return context;
+// };

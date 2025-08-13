@@ -1,4 +1,37 @@
 {
-    "users": [],
-    "tasks": []
+  "users": [
+    {
+      "id": "34a8",
+      "username": "admin",
+      "email": "test@gmail.com",
+      "password": "123",
+      "userId": 1
+    },
+    {
+      "id": "25ea",
+      "username": "admin",
+      "email": "test1@gmail.com",
+      "password": "123",
+      "userId": 2
+    },
+    {
+      "id": "3c91",
+      "username": "admin",
+      "email": "test4@gmail.com",
+      "password": "123",
+      "userId": 3
+    },
+    {
+      "id": "a1d2",
+      "username": "admin",
+      "email": "test0@gmail.com",
+      "password": "123",
+      "userId": 4
+    },
+    {
+      "id": "5248",
+      "userId": 5
+    }
+  ],
+  "tasks": []
 }

@@ -1,6 +1,9 @@
 import { Link } from "react-router";
 import "../styles.css"
 import { useState } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import toast from "react-hot-toast";
+import { useContext } from "react";
 
 import { useNavigate } from "react-router";
 // import Header from "./Header";
@@ -10,12 +13,30 @@ const Login = () => {
         password:"",
     });
 
+    const auth = useContext(AuthContext);
+
     const navigate= useNavigate();
 
-    const handleSubmit= (e) => {
+    const handleSubmit= async (e) => {
         e.preventDefault();
-        console.log(formData);
-        navigate("/signup")
+        try {
+           const result = await auth.login(formData.email, formData.password);
+           if(result.success) {
+            toast.success("Sign in Successful");
+            navigate("/");
+           } else {
+            toast.error(result.error);
+            navigate("/login");
+           }
+        } catch (error) {
+          toast.error(auth.error);
+          console.log(error);
+        }
+
+        setFormData({
+          email: "",
+          password: "",
+        });
     };
   
   return (

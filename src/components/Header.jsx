@@ -1,10 +1,14 @@
-<<<<<<< ours
-import React from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
+import toast from "react-hot-toast";
+import { useContext } from "react";
+import { useNavigate, Link } from "react-router";
 
 const Header = () => {
   // const { user, logout } = useAuth();
   const user = true;
+
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const headerStyle = {
     backgroundColor: "#282c34",
@@ -44,8 +48,9 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    logout();
-    // Add navigation logic here if needed
+    auth.logout();
+    toast.success("User Logged Out Successfully");
+    navigate("/login");
   };
 
   return (
@@ -54,7 +59,10 @@ const Header = () => {
       <div style={rightSectionStyle}>
         {user && (
           <>
-            <span style={userEmailStyle}>a@a.com</span>
+            <span style={userEmailStyle}>{auth.user.email}</span>
+            <Link to="/profile">
+              <button style={logoutButtonStyle}>Profile</button>
+            </Link>
             <button
               style={logoutButtonStyle}
               onClick={handleLogout}
@@ -71,24 +79,3 @@ const Header = () => {
 };
 
 export default Header;
-=======
-import React from 'react';
-
-import '../styles.css';
-
-export default function Header() {
-  return (<div>
-      <header id="main-header">
-      <div className="logo">My-Project</div>
-      <button className="hamburger" id="hamburger-btn">☰</button>
-      <nav id="desktop-nav">
-        <a href="#dashboard" id="nav-dashboard">Dashboard</a>
-        <a href="#tasks" id="nav-tasks">Tasks</a>
-        <a href="#notes" id="nav-notes">Notes</a>
-        <span id="user-info"></span>
-        <button id="logout-btn" style={{display: none}}>Logout</button>
-      </nav>
-      </header>
-    </div>);
-}
->>>>>>> theirs
