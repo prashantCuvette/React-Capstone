@@ -65,9 +65,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
         return { success: false, error: "User with this email already exists" };
       }
-
-      const userId = await generateUserId();
-      const newUser = { ...userdata, userId };
+      const newUser = { ...userdata };
 
       const res = await fetch(`${API_URL}/users`, {
         method: "POST",

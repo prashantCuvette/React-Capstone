@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import toast from "react-hot-toast";
+import { TaskContext } from "../contexts/TaskContext";
 
 const AddTask = ({ setIsTaskOpen }) => {
   const [addTask, setAddTask] = useState({
@@ -34,12 +35,21 @@ const AddTask = ({ setIsTaskOpen }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const taskContext = useContext(TaskContext);
+  // console.log(taskContext)
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Task data:", addTask);
-    // Handle form submission logic here
+   try {
+    const res = await taskContext.createTask(addTask);
+    if(res) {
+      toast.success("Task added successfully!");
+    }
     setIsTaskOpen(false);
-    toast.success("Task created successfully");
+
+   } catch (error) {
+     toast.error(error.message);
+   }
   };
 
   const handleCancel = () => {

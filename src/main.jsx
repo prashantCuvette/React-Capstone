@@ -8,22 +8,25 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { Toaster } from "react-hot-toast";
 import './styles.css';
 import Profile from "./components/Profile.jsx";
+import { TaskProvider } from "./contexts/TaskContext.jsx";
 
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
-    <Toaster position="top-right" reverseOrder={false} />
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+    <TaskProvider>
+      <Toaster position="top-right" reverseOrder={false} />
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
-        <Route element={<ProtectedRoute />}>
-          <Route index path="/" element={<App />} />
-          <Route path="/profile" element={<Profile />} />
-        </Route>
-      </Routes>
-    </Router>
+          <Route element={<ProtectedRoute />}>
+            <Route index path="/" element={<App />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+        </Routes>
+      </Router>
+    </TaskProvider>
   </AuthProvider>
 );
 

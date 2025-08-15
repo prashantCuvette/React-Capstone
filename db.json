@@ -1,37 +1,52 @@
 {
   "users": [
     {
-      "id": "34a8",
+      "id": "f5cf",
       "username": "admin",
       "email": "test@gmail.com",
-      "password": "123",
-      "userId": 1
-    },
-    {
-      "id": "25ea",
-      "username": "admin",
-      "email": "test1@gmail.com",
-      "password": "123",
-      "userId": 2
-    },
-    {
-      "id": "3c91",
-      "username": "admin",
-      "email": "test4@gmail.com",
-      "password": "123",
-      "userId": 3
-    },
-    {
-      "id": "a1d2",
-      "username": "admin",
-      "email": "test0@gmail.com",
-      "password": "123",
-      "userId": 4
-    },
-    {
-      "id": "5248",
-      "userId": 5
+      "password": "123"
     }
   ],
-  "tasks": []
+  "tasks": [
+    {
+      "id": "f0b8",
+      "title": "wwwwww",
+      "description": "QD QwdWEFerv WEFwe",
+      "priority": "high",
+      "color": "#2196f3",
+      "userId": "f5cf"
+    },
+    {
+      "id": "482f",
+      "title": "WEF",
+      "description": "ERF",
+      "priority": "medium",
+      "color": "#4caf50",
+      "userId": "f5cf"
+    },
+    {
+      "id": "44f3",
+      "title": "task 1",
+      "description": "desc 1",
+      "priority": "high",
+      "color": "#f44336",
+      "userId": "f5cf"
+    },
+    {
+      "id": "79a6",
+      "title": "task 1",
+      "description": "desc 1",
+      "priority": "medium",
+      "color": "#9c27b0",
+      "userId": "f5cf"
+    },
+    {
+      "id": "4c62",
+      "title": "task 2",
+      "description": "desc 2",
+      "priority": "medium",
+      "color": "#f44336",
+      "userId": "f5cf"
+    }
+  ]
 }
